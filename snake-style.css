@@ -22,8 +22,9 @@ div{
     border: 2px solid green;
 }
 
-div canvas{
+canvas{
     align-self: center;
+    justify-self: center;
     box-shadow: green 20px 20px 20px;
     border: 3px solid pink;
 }
