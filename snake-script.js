@@ -5,7 +5,7 @@ let speedOfGame = 7;
 
 //random number
 function random(max){
-    return Math.floor(Math.random()*max);
+    return Math.floor(Math.random() * max);
 }
 
 //grid system
@@ -16,15 +16,14 @@ let tileSize = gameFrame.width / tileCount - 2;
 let headX = 10;
 let headY = 10;
 const snakeTail = [];
-let tailLength = 0;
+let tailLength = 1;
 
 //snake tail
-class snakeTiles{
+class snakeTile{
     constructor(x, y){
         this.x = x;
         this.y = y;
     }
-
 }
 
 //food position 
@@ -43,6 +42,7 @@ function drawGame(){
     changeSnakePosition();
     
     appleCollision();
+    wallCollision();
     drawFood();
     drawSnake();
     setTimeout(drawGame, 1000/speedOfGame);
@@ -59,14 +59,16 @@ function clearScreen(){
 //initial position snake
 function drawSnake(){
     ctx.fillStyle = 'orange';
+    for (let i = 0; i < snakeTail.length; i++) {
+        let part = snakeTail[i];
+        ctx.fillRect(part.x*tileCount,part.y*tileCount, tileSize , tileSize);
+    }
+    snakeTail.push(new snakeTile(headX,headY));
+    if(snakeTail.length > tailLength){
+        snakeTail.shift();
+    }
+    ctx.fillStyle = 'white'
     ctx.fillRect(headX*tileCount,headY*tileCount, tileSize , tileSize);
-
-    // for (let i = 0; i < snakeTail.length; i++) {
-    //     let part = snakeTiles[i];
-    //     ctx.fillRect(part.x*tileCount,part.y*tileCount, tileSize , tileSize);
-    // }
-    // snakeTail.push(new snakeTiles(headX,headY))
-
 
 }
 
@@ -83,6 +85,15 @@ function appleCollision(){
         foodX = random(tileCount);  
         tailLength++;
     } 
+}
+
+function wallCollision(){
+    if( headX >= tileCount || headY >= tileCount || headX < 0 || headY < 0){
+        ctx.fillStyle = 'white';
+        ctx.font = '50px verdana';
+        ctx.fillText('Game Over!', gameFrame.width / 6.5, gameFrame.height / 2);
+        return 1;
+    }
 }
 
 //snake movement
