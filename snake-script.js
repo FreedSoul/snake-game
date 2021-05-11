@@ -1,12 +1,19 @@
 const gameFrame = document.getElementById('gameFrame');
 const ctx = gameFrame.getContext('2d');
+const pauseButton = document.getElementById('pauseButton')
 
 let speedOfGame = 7;
+
+//paused game
+let paused = false;
 
 //random number
 function random(max){
     return Math.floor(Math.random() * max);
 }
+
+//game over
+let isGameOver = 0;
 
 //grid system
 let tileCount = 20;
@@ -30,6 +37,9 @@ class snakeTile{
 let foodX = 7;
 let foodY = 14;
 
+//score
+let score = 0;
+
 //movement snake
 let xVelocity = 0;
 let yVelocity = 0;
@@ -37,17 +47,18 @@ let yVelocity = 0;
 //game loop - main function
 function drawGame(){
     
-    //if(window.onfocus(e)){
+    if(paused) return true;
+
     clearScreen();
     changeSnakePosition();
     
     appleCollision();
-    wallCollision();
+
+    isGameOver = wallCollision();
+    if( isGameOver === 1 ) return;
     drawFood();
     drawSnake();
     setTimeout(drawGame, 1000/speedOfGame);
-    //}
-    
 }
 
 //update screen
@@ -104,8 +115,10 @@ function changeSnakePosition(){
 
 //player actions
 document.body.addEventListener('keydown',KeyDown);
+pauseButton.addEventListener('click',(e) => paused = true)
 
 function KeyDown(event){
+    //snake movements
     //up
     if(event.keyCode == 38){
         if( yVelocity == 1) return;
@@ -130,9 +143,11 @@ function KeyDown(event){
         xVelocity = 1;
         yVelocity = 0;
     }
+    //pause 
+    if(event.keyCode == 80){
+        paused = true;
+    }
 }
-
-
 
 drawGame();
 
