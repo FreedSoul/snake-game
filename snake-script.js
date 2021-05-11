@@ -115,7 +115,7 @@ function changeSnakePosition(){
 
 //player actions
 document.body.addEventListener('keydown',KeyDown);
-pauseButton.addEventListener('click',(e) => paused = true)
+pauseButton.addEventListener('click',(e) => paused = true);
 
 function KeyDown(event){
     //snake movements
@@ -150,4 +150,7 @@ function KeyDown(event){
 }
 
 drawGame();
+if(!paused){
+    requestAnimationFrame(drawGame)
+}
 
