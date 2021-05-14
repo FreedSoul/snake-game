@@ -4,6 +4,7 @@ body{
     display: grid;
     box-sizing: border-box;
     background-color: grey;
+    overflow: hidden;
 }
 
 h1{
@@ -27,14 +28,14 @@ canvas{
     border: 3px solid pink;
 }
 
-#pauseButton{
+#resetButton{
     background-color: brown;
     color: white;
     padding: 19px 20px;
     text-align: center;
     display: inline-block;
-    font-size: large;
-    width: 20%;
+    font-size: 2rem;
+    width: 20rem;
     margin-top: 10px;
     cursor: pointer;
 }

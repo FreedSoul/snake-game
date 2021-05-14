@@ -1,11 +1,9 @@
 const gameFrame = document.getElementById('gameFrame');
 const ctx = gameFrame.getContext('2d');
-const pauseButton = document.getElementById('pauseButton')
+const resetButton = document.getElementById('resetButton')
 
 let speedOfGame = 7;
 
-//paused game
-let paused = false;
 
 //random number
 function random(max){
@@ -47,15 +45,16 @@ let yVelocity = 0;
 //game loop - main function
 function drawGame(){
     
-    if(paused) return true;
-
     clearScreen();
     changeSnakePosition();
-    
     appleCollision();
 
     isGameOver = wallCollision();
-    if( isGameOver === 1 ) return;
+    if( isGameOver === 1) return;
+    isGameOver = tailCollision();
+    if( isGameOver === 2) return;
+
+    drawScore();
     drawFood();
     drawSnake();
     setTimeout(drawGame, 1000/speedOfGame);
@@ -78,7 +77,7 @@ function drawSnake(){
     if(snakeTail.length > tailLength){
         snakeTail.shift();
     }
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = 'white';
     ctx.fillRect(headX*tileCount,headY*tileCount, tileSize , tileSize);
 
 }
@@ -89,12 +88,20 @@ function drawFood(){
     ctx.fillRect(foodX*tileCount, foodY*tileCount, tileSize, tileSize);
 }
 
+function drawScore(){
+    ctx.fillStyle = 'grey';
+    ctx.font = '18px verdana';
+    ctx.fillText('score:', gameFrame.width / 1.35, gameFrame.height/19)
+    ctx.fillText( score , gameFrame.width / 1.1, gameFrame.height/19)
+}
+
 function appleCollision(){
     //collsion apple
     if(foodX === headX && foodY === headY){
         foodY = random(tileCount);
         foodX = random(tileCount);  
         tailLength++;
+        score = score + 10;
     } 
 }
 
@@ -102,8 +109,23 @@ function wallCollision(){
     if( headX >= tileCount || headY >= tileCount || headX < 0 || headY < 0){
         ctx.fillStyle = 'white';
         ctx.font = '50px verdana';
-        ctx.fillText('Game Over!', gameFrame.width / 6.5, gameFrame.height / 2);
+        ctx.fillText('Game Over!', gameFrame.width / 8, gameFrame.height / 3);
         return 1;
+    }
+    
+}
+
+function tailCollision(){
+    for (let i = 0; i < snakeTail.length; i++) {
+        let part = snakeTail[i];
+        if(snakeTail.length > 3){
+            if(part.x === headX && part.y === headY){
+                ctx.fillStyle = 'white';
+                ctx.font = '50px verdana';
+                ctx.fillText('Game Over!', gameFrame.width / 6.5, gameFrame.height / 2);
+                return 2;
+            }
+        }
     }
 }
 
@@ -115,7 +137,10 @@ function changeSnakePosition(){
 
 //player actions
 document.body.addEventListener('keydown',KeyDown);
-pauseButton.addEventListener('click',(e) => paused = true);
+resetButton.addEventListener('click',() => {
+    location.reload();
+});
+
 
 function KeyDown(event){
     //snake movements
@@ -143,14 +168,11 @@ function KeyDown(event){
         xVelocity = 1;
         yVelocity = 0;
     }
-    //pause 
+    //reset 
     if(event.keyCode == 80){
-        paused = true;
+        location.reload();
     }
 }
 
 drawGame();
-if(!paused){
-    requestAnimationFrame(drawGame)
-}
 
