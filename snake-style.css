@@ -1,35 +1,37 @@
-body{
-    padding: 0;
-    margin: 0;
-    display: grid;
-    box-sizing: border-box;
-    background-color: grey;
-    overflow: hidden;
+body {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  box-sizing: border-box;
+  background: linear-gradient(to right, #2c3e50, #fd746c);
+  overflow: hidden;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h1{
-    justify-self: center;
+h1 {
+  justify-self: center;
 }
 
-h2{
-    justify-self: center;
+h2 {
+  justify-self: center;
 }
 
-div{
-    justify-self: center;
-    justify-content: center;
-    border: 2px solid green;
+div {
+  justify-self: center;
+  justify-content: center;
+  border: 2px solid green;
 }
 
-canvas{
-    align-self: center;
-    justify-self: center;
-    box-shadow: green 10px 10px 20px;
-    border: 3px solid pink;
+canvas {
+  margin-top: 30px;
+  align-self: center;
+  justify-self: center;
+  box-shadow: white 10px 10px 20px;
+  border: 3px solid rgb(191, 36, 62);
 }
 
-#resetButton{
-    background-color: brown;
+/* #resetButton{
+    background-color: black;
     color: white;
     padding: 19px 20px;
     text-align: center;
@@ -37,6 +39,68 @@ canvas{
     font-size: 2rem;
     width: 20rem;
     margin-top: 30px;
-    cursor: pointer;
+} */
+
+/* .btn {
+    border: 0 solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+    outline: 1px solid;
+    outline-color: rgba(255, 255, 255, .5);
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+} 
+  
+.btn:hover {
+    border: 1px solid;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, .5);
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 10px;
+    text-shadow: 1px 1px 2px #427388; 
+} */
+
+.btn {
+  text-decoration: none;
+  border: 1px solid rgb(146, 148, 248);
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(199, 87, 87, 0.428);
+  cursor: pointer;
+  color: white;
+  padding: 19px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 2rem;
+  width: 20rem;
+  margin-top: 30px;
+  outline: white;
+  outline-width: 1px;
+  outline-style: solid;
 }
 
+.btn:hover {
+  box-shadow: 1px 1px 25px 10px rgba(22, 22, 42, 0.4);
+  outline: #fd746c;
+  outline-width: 1px;
+  outline-style: solid;
+}
+
+.btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(235, 235, 251, 0.4),
+    transparent
+  );
+  transition: all 650ms;
+}
+
+.btn:hover:before {
+  left: 100%;
+}

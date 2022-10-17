@@ -1,10 +1,15 @@
-const gameFrame = document.getElementById('gameFrame');
+ gameFrame = document.getElementById('gameFrame');
 const ctx = gameFrame.getContext('2d');
 const resetButton = document.getElementById('resetButton')
 
 let speedOfGame = 7;
 
-
+const bgSpace = ctx.createLinearGradient(100, 300, 200, 0);
+  bgSpace.addColorStop(0, '#19547b');
+//   bgSpace.addColorStop(0.3, '#0f3443');
+  bgSpace.addColorStop(1, '#ffd89b');
+  bgSpace.addColorStop(0.4, '#34e89e');
+  
 //random number
 function random(max){
     return Math.floor(Math.random() * max);
@@ -62,13 +67,13 @@ function drawGame(){
 
 //update screen
 function clearScreen(){
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = bgSpace;
     ctx.fillRect(0,0,gameFrame.width,gameFrame.height);
 }
 
 //initial position snake
 function drawSnake(){
-    ctx.fillStyle = 'orange';
+    ctx.fillStyle = '#f7ff00';
     for (let i = 0; i < snakeTail.length; i++) {
         let part = snakeTail[i];
         ctx.fillRect(part.x*tileCount,part.y*tileCount, tileSize , tileSize);
